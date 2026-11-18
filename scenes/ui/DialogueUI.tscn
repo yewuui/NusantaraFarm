@@ -1,0 +1,72 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/dialogue_ui.gd" id="1_dlg"]
+
+[node name="DialogueUI" type="CanvasLayer"]
+layer = 20
+script = ExtResource("1_dlg")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -126.0
+offset_right = -18.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBox" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Portrait" type="TextureRect" parent="Panel/HBox"]
+custom_minimum_size = Vector2(54, 54)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Right" type="VBoxContainer" parent="Panel/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="HBoxContainer" parent="Panel/HBox/Right"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="Panel/HBox/Right/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pak Tani"
+
+[node name="HeartsLabel" type="Label" parent="Panel/HBox/Right/Header"]
+layout_mode = 2
+text = "Hati: 0/10"
+
+[node name="BodyLabel" type="RichTextLabel" parent="Panel/HBox/Right"]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Selamat pagi!"
+
+[node name="QuestBox" type="VBoxContainer" parent="Panel/HBox/Right"]
+layout_mode = 2
+
+[node name="Actions" type="HBoxContainer" parent="Panel/HBox/Right"]
+layout_mode = 2
+
+[node name="BtnGift" type="Button" parent="Panel/HBox/Right/Actions"]
+layout_mode = 2
+text = "Beri Hadiah (Slot Aktif)"
+
+[node name="BtnMarket" type="Button" parent="Panel/HBox/Right/Actions"]
+layout_mode = 2
+text = "Buka Pasar"
+
+[node name="BtnClose" type="Button" parent="Panel/HBox/Right/Actions"]
+layout_mode = 2
+text = "Tutup"
+
+[connection signal="pressed" from="Panel/HBox/Right/Actions/BtnGift" to="." method="_on_btn_gift_pressed"]
+[connection signal="pressed" from="Panel/HBox/Right/Actions/BtnMarket" to="." method="_on_btn_market_pressed"]
+[connection signal="pressed" from="Panel/HBox/Right/Actions/BtnClose" to="." method="_on_btn_close_pressed"]

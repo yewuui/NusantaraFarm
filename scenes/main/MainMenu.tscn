@@ -1,0 +1,116 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_mm"]
+[ext_resource type="Texture2D" path="res://assets/ui/main_menu_bg.png" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SettingsUI.tscn" id="3_set"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mm")
+
+[node name="Bg" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Title" type="Label" parent="CenterContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.96, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.24, 0.14, 0.06, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 14
+text = "NUSANTARA FARM: PETUALANGAN DESA"
+horizontal_alignment = 1
+
+[node name="BtnNew" type="Button" parent="CenterContainer/VBox"]
+custom_minimum_size = Vector2(150, 22)
+layout_mode = 2
+text = "MULAI BARU"
+
+[node name="BtnContinue" type="Button" parent="CenterContainer/VBox"]
+custom_minimum_size = Vector2(150, 22)
+layout_mode = 2
+text = "LANJUTKAN"
+
+[node name="BtnLan" type="Button" parent="CenterContainer/VBox"]
+custom_minimum_size = Vector2(150, 22)
+layout_mode = 2
+text = "MAIN BARENG (LAN)"
+
+[node name="BtnSettings" type="Button" parent="CenterContainer/VBox"]
+custom_minimum_size = Vector2(150, 22)
+layout_mode = 2
+text = "PENGATURAN"
+
+[node name="BtnQuit" type="Button" parent="CenterContainer/VBox"]
+custom_minimum_size = Vector2(150, 22)
+layout_mode = 2
+text = "KELUAR"
+
+[node name="LoadPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -85.0
+offset_right = 140.0
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="LoadPanel"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="LoadPanel/VBox"]
+layout_mode = 2
+text = "PILIH WORLD TERSIMPAN"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="LoadPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SavesList" type="VBoxContainer" parent="LoadPanel/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnCloseLoad" type="Button" parent="LoadPanel/VBox"]
+layout_mode = 2
+text = "TUTUP"
+
+[node name="SettingsUI" parent="." instance=ExtResource("3_set")]
+visible = false
+
+[connection signal="pressed" from="CenterContainer/VBox/BtnNew" to="." method="_on_btn_new_pressed"]
+[connection signal="pressed" from="CenterContainer/VBox/BtnContinue" to="." method="_on_btn_continue_pressed"]
+[connection signal="pressed" from="CenterContainer/VBox/BtnLan" to="." method="_on_btn_lan_pressed"]
+[connection signal="pressed" from="CenterContainer/VBox/BtnSettings" to="." method="_on_btn_settings_pressed"]
+[connection signal="pressed" from="CenterContainer/VBox/BtnQuit" to="." method="_on_btn_quit_pressed"]
+[connection signal="pressed" from="LoadPanel/VBox/BtnCloseLoad" to="." method="_on_btn_close_load_pressed"]

@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/game_zone.gd" id="1_gz"]
+[ext_resource type="PackedScene" path="res://scenes/objects/ZonePortal.tscn" id="2_pt"]
+
+[node name="ZonaPantai" type="Node2D"]
+script = ExtResource("1_gz")
+zone_id = &"pantai"
+
+[node name="GroundLayer" type="TileMapLayer" parent="."]
+
+[node name="FarmSoilLayer" type="TileMapLayer" parent="."]
+
+[node name="DetailLayer" type="TileMapLayer" parent="."]
+
+[node name="YSortRoot" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Portals" type="Node2D" parent="."]
+
+[node name="ToDesa" parent="Portals" instance=ExtResource("2_pt")]
+position = Vector2(280, 12)
+target_zone_id = "desa_pasar"
+target_spawn_marker = "FromPantai"
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="Default" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(280, 52)
+
+[node name="FromDesa" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(280, 52)

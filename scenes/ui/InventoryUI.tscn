@@ -1,0 +1,95 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/inventory_ui.gd" id="1_inv"]
+
+[node name="InventoryUI" type="CanvasLayer"]
+layer = 20
+script = ExtResource("1_inv")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.4)
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -205.0
+offset_top = -105.0
+offset_right = 205.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TAS PINGGANG"
+
+[node name="BtnClose" type="Button" parent="Panel/VBox/Header"]
+layout_mode = 2
+text = "X"
+
+[node name="Body" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="GridScroll" type="ScrollContainer" parent="Panel/VBox/Body"]
+custom_minimum_size = Vector2(165, 0)
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="Panel/VBox/Body/GridScroll"]
+layout_mode = 2
+columns = 5
+
+[node name="ChestBox" type="VBoxContainer" parent="Panel/VBox/Body"]
+visible = false
+layout_mode = 2
+
+[node name="ChestLbl" type="Label" parent="Panel/VBox/Body/ChestBox"]
+layout_mode = 2
+text = "Peti Bersama:"
+
+[node name="ChestGrid" type="GridContainer" parent="Panel/VBox/Body/ChestBox"]
+layout_mode = 2
+columns = 4
+
+[node name="DetailBox" type="VBoxContainer" parent="Panel/VBox/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ItemName" type="Label" parent="Panel/VBox/Body/DetailBox"]
+layout_mode = 2
+text = "Pilih item..."
+
+[node name="ItemDesc" type="Label" parent="Panel/VBox/Body/DetailBox"]
+layout_mode = 2
+size_flags_vertical = 3
+autowrap_mode = 3
+
+[node name="BtnSwapHotbar" type="Button" parent="Panel/VBox/Body/DetailBox"]
+visible = false
+layout_mode = 2
+text = "Taruh ke Slot 6 Hotbar"
+
+[node name="BtnAction" type="Button" parent="Panel/VBox/Body/DetailBox"]
+visible = false
+layout_mode = 2
+text = "Gunakan"
+
+[connection signal="pressed" from="Panel/VBox/Header/BtnClose" to="." method="_on_btn_close_pressed"]
+[connection signal="pressed" from="Panel/VBox/Body/DetailBox/BtnSwapHotbar" to="." method="_on_btn_swap_hotbar_pressed"]
+[connection signal="pressed" from="Panel/VBox/Body/DetailBox/BtnAction" to="." method="_on_btn_action_pressed"]

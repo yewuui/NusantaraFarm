@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/game_zone.gd" id="1_gz"]
+[ext_resource type="PackedScene" path="res://scenes/objects/ZonePortal.tscn" id="2_pt"]
+[ext_resource type="PackedScene" path="res://scenes/objects/ZoneGate.tscn" id="3_gt"]
+
+[node name="ZonaKebun" type="Node2D"]
+script = ExtResource("1_gz")
+zone_id = &"kebun"
+
+[node name="GroundLayer" type="TileMapLayer" parent="."]
+
+[node name="FarmSoilLayer" type="TileMapLayer" parent="."]
+
+[node name="DetailLayer" type="TileMapLayer" parent="."]
+
+[node name="YSortRoot" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Portals" type="Node2D" parent="."]
+
+[node name="ToJoglo" parent="Portals" instance=ExtResource("2_pt")]
+position = Vector2(180, 124)
+target_zone_id = "joglo_interior"
+target_spawn_marker = "FromOutside"
+
+[node name="ToDesa" parent="Portals" instance=ExtResource("2_pt")]
+position = Vector2(564, 184)
+target_zone_id = "desa_pasar"
+target_spawn_marker = "FromKebun"
+
+[node name="ToSawit" parent="Portals" instance=ExtResource("2_pt")]
+position = Vector2(248, 374)
+target_zone_id = "sawit"
+target_spawn_marker = "FromKebun"
+
+[node name="GateSawit" parent="Portals" instance=ExtResource("3_gt")]
+position = Vector2(248, 360)
+target_zone_id = "sawit"
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="Default" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(200, 170)
+
+[node name="FromJoglo" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(180, 152)
+
+[node name="FromDesa" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(524, 184)
+
+[node name="FromSawit" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(248, 336)

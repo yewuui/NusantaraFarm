@@ -1,0 +1,102 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/character_select.gd" id="1_cs"]
+[ext_resource type="Texture2D" path="res://assets/ui/main_menu_bg.png" id="2_bg"]
+
+[node name="CharacterSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cs")
+
+[node name="Bg" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -95.0
+offset_right = 150.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "BUAT KARAKTER & KEBUN BARU"
+horizontal_alignment = 1
+
+[node name="AvatarRow" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="Portrait" type="TextureRect" parent="Panel/VBox/AvatarRow"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Buttons" type="VBoxContainer" parent="Panel/VBox/AvatarRow"]
+layout_mode = 2
+
+[node name="BtnBudi" type="Button" parent="Panel/VBox/AvatarRow/Buttons"]
+layout_mode = 2
+text = "Pilih Budi"
+
+[node name="BtnMitha" type="Button" parent="Panel/VBox/AvatarRow/Buttons"]
+layout_mode = 2
+text = "Pilih Mitha"
+
+[node name="Form" type="VBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="LblName" type="Label" parent="Panel/VBox/Form"]
+layout_mode = 2
+text = "Nama Petani:"
+
+[node name="NameEdit" type="LineEdit" parent="Panel/VBox/Form"]
+layout_mode = 2
+text = "Budi"
+
+[node name="LblWorld" type="Label" parent="Panel/VBox/Form"]
+layout_mode = 2
+text = "Nama World / Desa:"
+
+[node name="WorldEdit" type="LineEdit" parent="Panel/VBox/Form"]
+layout_mode = 2
+text = "Desa Subur"
+
+[node name="Footer" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnBack" type="Button" parent="Panel/VBox/Footer"]
+layout_mode = 2
+text = "KEMBALI"
+
+[node name="BtnStart" type="Button" parent="Panel/VBox/Footer"]
+layout_mode = 2
+text = "MULAI BERTANI"
+
+[connection signal="pressed" from="Panel/VBox/AvatarRow/Buttons/BtnBudi" to="." method="_on_btn_budi_pressed"]
+[connection signal="pressed" from="Panel/VBox/AvatarRow/Buttons/BtnMitha" to="." method="_on_btn_mitha_pressed"]
+[connection signal="pressed" from="Panel/VBox/Footer/BtnBack" to="." method="_on_btn_back_pressed"]
+[connection signal="pressed" from="Panel/VBox/Footer/BtnStart" to="." method="_on_btn_start_pressed"]

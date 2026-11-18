@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/game_zone.gd" id="1_gz"]
+[ext_resource type="PackedScene" path="res://scenes/objects/ZonePortal.tscn" id="2_pt"]
+[ext_resource type="PackedScene" path="res://scenes/objects/ZoneGate.tscn" id="3_gt"]
+
+[node name="ZonaHutan" type="Node2D"]
+script = ExtResource("1_gz")
+zone_id = &"hutan"
+
+[node name="GroundLayer" type="TileMapLayer" parent="."]
+
+[node name="FarmSoilLayer" type="TileMapLayer" parent="."]
+
+[node name="DetailLayer" type="TileMapLayer" parent="."]
+
+[node name="YSortRoot" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Portals" type="Node2D" parent="."]
+
+[node name="ToDesa" parent="Portals" instance=ExtResource("2_pt")]
+position = Vector2(280, 374)
+target_zone_id = "desa_pasar"
+target_spawn_marker = "FromHutan"
+
+[node name="ToTambang" parent="Portals" instance=ExtResource("2_pt")]
+position = Vector2(564, 184)
+target_zone_id = "tambang"
+target_spawn_marker = "FromHutan"
+
+[node name="GateTambang" parent="Portals" instance=ExtResource("3_gt")]
+position = Vector2(548, 184)
+target_zone_id = "tambang"
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="Default" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(280, 336)
+
+[node name="FromDesa" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(280, 336)
+
+[node name="FromTambang" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(520, 184)

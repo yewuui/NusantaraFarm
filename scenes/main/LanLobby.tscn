@@ -1,0 +1,133 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/lan_lobby.gd" id="1_lan"]
+[ext_resource type="Texture2D" path="res://assets/ui/main_menu_bg.png" id="2_bg"]
+
+[node name="LanLobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lan")
+
+[node name="Bg" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -215.0
+offset_top = -115.0
+offset_right = 215.0
+offset_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="TopIdentity" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/VBox/TopIdentity"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CO-OP LAN / HOTSPOT (1-4 PEMAIN)"
+
+[node name="NameEdit" type="LineEdit" parent="Panel/VBox/TopIdentity"]
+custom_minimum_size = Vector2(95, 0)
+layout_mode = 2
+text = "Budi"
+
+[node name="BtnAvatar" type="Button" parent="Panel/VBox/TopIdentity"]
+layout_mode = 2
+text = "Avatar: Budi"
+
+[node name="Columns" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="HostBox" type="VBoxContainer" parent="Panel/VBox/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LblHost" type="Label" parent="Panel/VBox/Columns/HostBox"]
+layout_mode = 2
+text = "HOST WORLD (Pemilik Kebun)"
+
+[node name="HostWorldEdit" type="LineEdit" parent="Panel/VBox/Columns/HostBox"]
+layout_mode = 2
+text = "Kebun Mabar"
+
+[node name="BtnHostNew" type="Button" parent="Panel/VBox/Columns/HostBox"]
+layout_mode = 2
+text = "Buat & Host World Baru"
+
+[node name="SavedScroll" type="ScrollContainer" parent="Panel/VBox/Columns/HostBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SavedList" type="VBoxContainer" parent="Panel/VBox/Columns/HostBox/SavedScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IpLabel" type="Label" parent="Panel/VBox/Columns/HostBox"]
+layout_mode = 2
+text = "IP Lokal: -"
+autowrap_mode = 3
+
+[node name="JoinBox" type="VBoxContainer" parent="Panel/VBox/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LblJoin" type="Label" parent="Panel/VBox/Columns/JoinBox"]
+layout_mode = 2
+text = "GABUNG WORLD LAN TERDETEKSI"
+
+[node name="LanScroll" type="ScrollContainer" parent="Panel/VBox/Columns/JoinBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LanList" type="VBoxContainer" parent="Panel/VBox/Columns/JoinBox/LanScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ManualRow" type="HBoxContainer" parent="Panel/VBox/Columns/JoinBox"]
+layout_mode = 2
+
+[node name="IpEdit" type="LineEdit" parent="Panel/VBox/Columns/JoinBox/ManualRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "127.0.0.1"
+
+[node name="BtnJoinManual" type="Button" parent="Panel/VBox/Columns/JoinBox/ManualRow"]
+layout_mode = 2
+text = "Gabung IP"
+
+[node name="StatusLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Pastikan semua perangkat di Wi-Fi / Hotspot yang sama."
+
+[node name="BtnBack" type="Button" parent="Panel/VBox"]
+layout_mode = 2
+text = "KEMBALI KE MENU"
+
+[connection signal="pressed" from="Panel/VBox/TopIdentity/BtnAvatar" to="." method="_on_btn_avatar_pressed"]
+[connection signal="pressed" from="Panel/VBox/Columns/HostBox/BtnHostNew" to="." method="_on_btn_host_new_pressed"]
+[connection signal="pressed" from="Panel/VBox/Columns/JoinBox/ManualRow/BtnJoinManual" to="." method="_on_btn_join_manual_pressed"]
+[connection signal="pressed" from="Panel/VBox/BtnBack" to="." method="_on_btn_back_pressed"]

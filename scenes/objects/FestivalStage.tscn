@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/objects/festival_stage.gd" id="1_fest"]
+[ext_resource type="Texture2D" path="res://assets/objects/festival_tumpeng.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(40, 22)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_int"]
+radius = 30.0
+
+[node name="FestivalStage" type="Node2D"]
+script = ExtResource("1_fest")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("CircleShape2D_int")

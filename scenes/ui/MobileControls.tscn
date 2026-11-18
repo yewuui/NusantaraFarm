@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/mobile_controls.gd" id="1_mc"]
+[ext_resource type="Script" path="res://scripts/ui/virtual_joystick.gd" id="2_vj"]
+
+[node name="MobileControls" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_mc")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VirtualJoystick" type="Control" parent="Root"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -82.0
+offset_right = 82.0
+offset_bottom = -10.0
+grow_vertical = 0
+script = ExtResource("2_vj")
+
+[node name="ActionButtons" type="HBoxContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -52.0
+offset_right = -10.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="BtnInteract" type="Button" parent="Root/ActionButtons"]
+custom_minimum_size = Vector2(40, 34)
+layout_mode = 2
+text = "E"
+
+[node name="BtnUse" type="Button" parent="Root/ActionButtons"]
+custom_minimum_size = Vector2(42, 34)
+layout_mode = 2
+text = "AKSI"
+
+[connection signal="pressed" from="Root/ActionButtons/BtnInteract" to="." method="_on_btn_interact_pressed"]
+[connection signal="pressed" from="Root/ActionButtons/BtnUse" to="." method="_on_btn_use_pressed"]

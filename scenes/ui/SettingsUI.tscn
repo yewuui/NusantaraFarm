@@ -1,0 +1,117 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/settings_ui.gd" id="1_set"]
+
+[node name="SettingsUI" type="CanvasLayer"]
+process_mode = 3
+layer = 25
+script = ExtResource("1_set")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -95.0
+offset_right = 165.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "PENGATURAN GAME & K3LH"
+horizontal_alignment = 1
+
+[node name="Cols" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="AudioBox" type="VBoxContainer" parent="Panel/VBox/Cols"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MusicVal" type="Label" parent="Panel/VBox/Cols/AudioBox"]
+layout_mode = 2
+text = "Musik: 70%"
+
+[node name="MusicSlider" type="HSlider" parent="Panel/VBox/Cols/AudioBox"]
+layout_mode = 2
+max_value = 100.0
+step = 5.0
+value = 70.0
+
+[node name="SfxVal" type="Label" parent="Panel/VBox/Cols/AudioBox"]
+layout_mode = 2
+text = "Efek Suara: 90%"
+
+[node name="SfxSlider" type="HSlider" parent="Panel/VBox/Cols/AudioBox"]
+layout_mode = 2
+max_value = 100.0
+step = 5.0
+value = 90.0
+
+[node name="TouchCheck" type="CheckButton" parent="Panel/VBox/Cols/AudioBox"]
+layout_mode = 2
+text = "Kontrol Sentuh"
+
+[node name="K3LHBox" type="VBoxContainer" parent="Panel/VBox/Cols"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="K3LHTip" type="Label" parent="Panel/VBox/Cols/K3LHBox"]
+layout_mode = 2
+text = "Kesehatan (K3LH)"
+
+[node name="K3LHCheck" type="CheckButton" parent="Panel/VBox/Cols/K3LHBox"]
+layout_mode = 2
+button_pressed = true
+text = "Pengingat Bermain"
+
+[node name="K3LHVal" type="Label" parent="Panel/VBox/Cols/K3LHBox"]
+layout_mode = 2
+text = "Durasi Reminder: 60 Menit"
+
+[node name="K3LHSlider" type="HSlider" parent="Panel/VBox/Cols/K3LHBox"]
+layout_mode = 2
+min_value = 30.0
+max_value = 120.0
+step = 30.0
+value = 60.0
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnSave" type="Button" parent="Panel/VBox/Buttons"]
+layout_mode = 2
+text = "SIMPAN"
+
+[node name="BtnQuitWorld" type="Button" parent="Panel/VBox/Buttons"]
+layout_mode = 2
+text = "SIMPAN & KELUAR"
+
+[node name="BtnClose" type="Button" parent="Panel/VBox/Buttons"]
+layout_mode = 2
+text = "TUTUP"
+
+[connection signal="value_changed" from="Panel/VBox/Cols/AudioBox/MusicSlider" to="." method="_on_slider_changed"]
+[connection signal="value_changed" from="Panel/VBox/Cols/AudioBox/SfxSlider" to="." method="_on_slider_changed"]
+[connection signal="value_changed" from="Panel/VBox/Cols/K3LHBox/K3LHSlider" to="." method="_on_slider_changed"]
+[connection signal="pressed" from="Panel/VBox/Buttons/BtnSave" to="." method="_on_btn_save_pressed"]
+[connection signal="pressed" from="Panel/VBox/Buttons/BtnQuitWorld" to="." method="_on_btn_quit_world_pressed"]
+[connection signal="pressed" from="Panel/VBox/Buttons/BtnClose" to="." method="_on_btn_close_pressed"]

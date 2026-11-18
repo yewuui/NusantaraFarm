@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_root.gd" id="1_wr"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MobileControls.tscn" id="3_mc"]
+[ext_resource type="PackedScene" path="res://scenes/ui/InventoryUI.tscn" id="4_inv"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ProductionUI.tscn" id="5_prod"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MarketUI.tscn" id="6_mkt"]
+[ext_resource type="PackedScene" path="res://scenes/ui/DialogueUI.tscn" id="7_dlg"]
+[ext_resource type="PackedScene" path="res://scenes/ui/MapUI.tscn" id="8_map"]
+[ext_resource type="PackedScene" path="res://scenes/ui/ProfileUI.tscn" id="9_prof"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SettingsUI.tscn" id="10_set"]
+[ext_resource type="PackedScene" path="res://scenes/ui/K3LHModal.tscn" id="11_k3"]
+
+[node name="WorldRoot" type="Node2D"]
+script = ExtResource("1_wr")
+
+[node name="ZoneContainer" type="Node2D" parent="."]
+
+[node name="PlayersRoot" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource("2_hud")]
+
+[node name="MobileControls" parent="." instance=ExtResource("3_mc")]
+
+[node name="OverlayLayer" type="Node" parent="."]
+
+[node name="InventoryUI" parent="OverlayLayer" instance=ExtResource("4_inv")]
+
+[node name="ProductionUI" parent="OverlayLayer" instance=ExtResource("5_prod")]
+
+[node name="MarketUI" parent="OverlayLayer" instance=ExtResource("6_mkt")]
+
+[node name="DialogueUI" parent="OverlayLayer" instance=ExtResource("7_dlg")]
+
+[node name="MapUI" parent="OverlayLayer" instance=ExtResource("8_map")]
+
+[node name="ProfileUI" parent="OverlayLayer" instance=ExtResource("9_prof")]
+
+[node name="SettingsUI" parent="OverlayLayer" instance=ExtResource("10_set")]
+
+[node name="K3LHModal" parent="OverlayLayer" instance=ExtResource("11_k3")]

@@ -1,0 +1,183 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_hud"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_hud")
+
+[node name="DrowsyVignette" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.06, 0.05, 0.14, 0.28)
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopLeft" type="PanelContainer" parent="Root"]
+layout_mode = 1
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 138.0
+offset_bottom = 78.0
+
+[node name="VBox" type="VBoxContainer" parent="Root/TopLeft"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="CoinsLabel" type="Label" parent="Root/TopLeft/VBox"]
+layout_mode = 2
+text = "Koin: 150"
+
+[node name="LevelLabel" type="Label" parent="Root/TopLeft/VBox"]
+layout_mode = 2
+text = "World Lv 1 (0/50)"
+
+[node name="XpBar" type="ProgressBar" parent="Root/TopLeft/VBox"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+show_percentage = false
+
+[node name="StaminaBar" type="ProgressBar" parent="Root/TopLeft/VBox"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="StatusRow" type="HBoxContainer" parent="Root/TopLeft/VBox"]
+layout_mode = 2
+
+[node name="EcoLabel" type="Label" parent="Root/TopLeft/VBox/StatusRow"]
+layout_mode = 2
+text = "Eco: 80"
+
+[node name="DrowsyLabel" type="Label" parent="Root/TopLeft/VBox/StatusRow"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.45, 1, 1)
+text = "[MENGANTUK]"
+
+[node name="TopRight" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = 74.0
+grow_horizontal = 0
+
+[node name="VBox" type="VBoxContainer" parent="Root/TopRight"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="TimeLabel" type="Label" parent="Root/TopRight/VBox"]
+layout_mode = 2
+text = "H1 Kemarau | 06:00"
+horizontal_alignment = 2
+
+[node name="WeatherLabel" type="Label" parent="Root/TopRight/VBox"]
+layout_mode = 2
+text = "Cuaca: Cerah"
+horizontal_alignment = 2
+
+[node name="FestivalLabel" type="Label" parent="Root/TopRight/VBox"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.35, 0.1, 1)
+text = "FESTIVAL PANEN!"
+horizontal_alignment = 2
+
+[node name="SleepVoteLabel" type="Label" parent="Root/TopRight/VBox"]
+visible = false
+layout_mode = 2
+text = "Tidur: 1/2"
+horizontal_alignment = 2
+
+[node name="BtnMenu" type="Button" parent="Root/TopRight/VBox"]
+layout_mode = 2
+text = "Pengaturan"
+
+[node name="PromptLabel" type="Label" parent="Root"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_top = -54.0
+offset_right = 110.0
+offset_bottom = -38.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.96, 0.72, 1)
+theme_override_colors/font_outline_color = Color(0.18, 0.1, 0.05, 1)
+theme_override_constants/outline_size = 2
+text = "[E] Interaksi"
+horizontal_alignment = 1
+
+[node name="ToastLabel" type="Label" parent="Root"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -140.0
+offset_top = 8.0
+offset_right = 140.0
+offset_bottom = 26.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0.15, 0.08, 0.04, 1)
+theme_override_constants/outline_size = 2
+text = "Notifikasi"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BottomBar" type="HBoxContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -155.0
+offset_top = -34.0
+offset_right = 155.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Hotbar" type="HBoxContainer" parent="Root/BottomBar"]
+layout_mode = 2
+
+[node name="BtnTas" type="Button" parent="Root/BottomBar"]
+layout_mode = 2
+text = "Tas"
+
+[node name="BtnProfil" type="Button" parent="Root/BottomBar"]
+layout_mode = 2
+text = "Profil"
+
+[node name="BtnPeta" type="Button" parent="Root/BottomBar"]
+layout_mode = 2
+text = "Peta"
+
+[connection signal="pressed" from="Root/TopRight/VBox/BtnMenu" to="." method="_on_btn_menu_pressed"]
+[connection signal="pressed" from="Root/BottomBar/BtnTas" to="." method="_on_btn_tas_pressed"]
+[connection signal="pressed" from="Root/BottomBar/BtnProfil" to="." method="_on_btn_profil_pressed"]
+[connection signal="pressed" from="Root/BottomBar/BtnPeta" to="." method="_on_btn_peta_pressed"]
