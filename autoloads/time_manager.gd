@@ -193,7 +193,7 @@ func advance_day_by_sleep() -> void:
 	var mins_to_morning := (START_MINUTE - minute_of_day)
 	if mins_to_morning <= 0:
 		mins_to_morning += MINUTES_PER_DAY
-	var hours_skipped := int(floor(float(mins_to_morning) / 60.0))
+	var hours_skipped := int(ceil(float(mins_to_morning) / 60.0))
 	total_minutes_elapsed += mins_to_morning
 	minute_of_day = START_MINUTE
 
@@ -266,7 +266,7 @@ func _client_sync_clock(tot: int, mod: int, d: int, y: int, s: String, w: String
 	minute_tick.emit(get_hour(), get_minute())
 
 
-@rpc("authority", "reliable")
+@rpc("authority", "call_local", "reliable")
 func _client_on_day_passed(tot: int, mod: int, d: int, y: int, s: String, w: String) -> void:
 	total_minutes_elapsed = tot
 	minute_of_day = mod

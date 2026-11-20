@@ -196,8 +196,20 @@ func add_item_to_player(uuid: String, item_id: String, count: int) -> bool:
 	var it := Catalog.get_item(StringName(item_id))
 	var max_stack := it.max_stack if it != null else 99
 	var inv: Array = players[uuid]["inventory"]
-	var remaining := count
 
+	# Ensure full amount can fit to avoid partial-add duplication/loss.
+	var space := 0
+	for slot in inv:
+		if str(slot["id"]) == item_id:
+			space += maxi(0, max_stack - int(slot["count"]))
+		elif str(slot["id"]) == "":
+			space += max_stack
+		if space >= count:
+			break
+	if space < count:
+		return false
+
+	var remaining := count
 	for slot in inv:
 		if str(slot["id"]) == item_id and int(slot["count"]) < max_stack:
 			var add := mini(max_stack - int(slot["count"]), remaining)
@@ -455,6 +467,8 @@ func request_swap_inventory_slots(idx_a: int, idx_b: int) -> void:
 		return
 	var uuid := NetworkManager.get_uuid_for_peer(_get_sender_peer_id())
 	if not players.has(uuid):
+		return
+	if idx_a == idx_b:
 		return
 	var inv: Array = players[uuid]["inventory"]
 	if idx_a < 0 or idx_b < 0 or idx_a >= inv.size() or idx_b >= inv.size():

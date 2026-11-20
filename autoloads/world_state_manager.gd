@@ -345,7 +345,9 @@ func request_collect_craft(station_id: String) -> void:
 	var out_qty := recipe.output_amount
 	if EconomyManager.get_skill_level(uuid, "produksi") >= 5 and randf() < 0.10:
 		out_qty += 1
-	EconomyManager.add_item_to_player(uuid, String(recipe.output_item_id), out_qty)
+	if not EconomyManager.add_item_to_player(uuid, String(recipe.output_item_id), out_qty):
+		_notify_uuid(uuid, "Tas Pinggang penuh! Kosongkan slot sebelum mengambil hasil olahan.", "warn")
+		return
 	EconomyManager.add_skill_xp(uuid, "produksi", 12)
 	add_world_xp(recipe.craft_xp)
 	active_machines.erase(station_id)
@@ -411,6 +413,8 @@ func request_chest_deposit(inv_idx: int) -> void:
 	if _add_to_chest(item_id, count):
 		EconomyManager.clear_inventory_slot(uuid, inv_idx)
 		_sync_chest()
+	else:
+		_notify_uuid(uuid, "Peti bersama penuh!", "warn")
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -429,6 +433,8 @@ func request_chest_withdraw(chest_idx: int) -> void:
 	if EconomyManager.add_item_to_player(uuid, item_id, count):
 		shared_chest[chest_idx] = {"id": "", "count": 0}
 		_sync_chest()
+	else:
+		_notify_uuid(uuid, "Tas Pinggang penuh! Kosongkan slot terlebih dahulu.", "warn")
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -463,18 +469,30 @@ func request_festival_submit(inv_idx: int) -> void:
 
 
 func _add_to_chest(item_id: String, count: int) -> bool:
+	# Ensure full amount can fit to avoid partial-add duplication/loss.
+	var space := 0
+	for s in shared_chest:
+		if str(s["id"]) == item_id:
+			space += maxi(0, 99 - int(s["count"]))
+		elif str(s["id"]) == "":
+			space += 99
+		if space >= count:
+			break
+	if space < count:
+		return false
+
+	var remaining := count
 	for s in shared_chest:
 		if str(s["id"]) == item_id and int(s["count"]) < 99:
-			var space := 99 - int(s["count"])
-			var add := mini(space, count)
+			var add := mini(99 - int(s["count"]), remaining)
 			s["count"] = int(s["count"]) + add
-			count -= add
-			if count <= 0:
+			remaining -= add
+			if remaining <= 0:
 				return true
 	for s in shared_chest:
 		if str(s["id"]) == "":
 			s["id"] = item_id
-			s["count"] = count
+			s["count"] = remaining
 			return true
 	return false
 
@@ -594,6 +612,12 @@ func _client_sync_machine(station_id: String, entry: Dictionary) -> void:
 
 
 @rpc("authority", "call_local", "reliable")
+func _client_sync_chest(chest_data: Array) -> void:
+	shared_chest = chest_data
+	chest_updated.emit()
+
+
+@rpc("authority", "call_local", "reliable")
 func _client_zone_unlocked(zone_id: String) -> void:
 	unlocked_zones[zone_id] = true
 	zone_unlocked.emit(zone_id)
@@ -603,12 +627,6 @@ func _client_zone_unlocked(zone_id: String) -> void:
 
 
 @rpc("authority", "call_local", "reliable")
-func _client_sync_chest(chest_data: Array) -> void:
-	shared_chest = chest_data
-	chest_updated.emit()
-
-
-@rpc("authority", "reliable")
 func _client_sync_farm_and_trees(plots_data: Dictionary, trees_data: Dictionary) -> void:
 	farm_plots = plots_data
 	forest_trees = trees_data

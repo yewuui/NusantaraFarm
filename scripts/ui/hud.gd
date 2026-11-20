@@ -21,12 +21,26 @@ extends CanvasLayer
 var _hotbar_buttons: Array[Button] = []
 var _toast_timer: float = 0.0
 
+# Satu bingkai kayu untuk tiap slot, plus bingkai krem untuk slot yang aktif.
+var _slot_styles: Array[StyleBoxTexture] = []
+var _slot_active_style: StyleBoxTexture
+
 
 func _ready() -> void:
 	$Root.theme = UIThemeHelper.get_theme()
+	_make_slot_styles()
 	for i in range(6):
 		var b := Button.new()
 		b.custom_minimum_size = Vector2(26, 26)
+		b.add_theme_stylebox_override("normal", _slot_styles[i])
+		b.add_theme_stylebox_override("hover", _slot_styles[i])
+		b.add_theme_stylebox_override("pressed", _slot_styles[i])
+		b.add_theme_stylebox_override("focus", _slot_styles[i])
+		b.add_theme_color_override("font_color", Color(1.0, 0.95, 0.78))
+		b.add_theme_color_override("font_hover_color", Color(1.0, 0.95, 0.78))
+		b.add_theme_color_override("font_pressed_color", Color(1.0, 0.95, 0.78))
+		b.add_theme_color_override("font_outline_color", Color(0.12, 0.06, 0.03))
+		b.add_theme_constant_override("outline_size", 2)
 		b.pressed.connect(_on_hotbar_slot_pressed.bind(i))
 		hotbar_box.add_child(b)
 		_hotbar_buttons.append(b)
@@ -125,6 +139,17 @@ func _refresh_player_stats() -> void:
 	_refresh_hotbar()
 
 
+func _make_slot_styles() -> void:
+	for i in range(6):
+		var tex := load("res://assets/ui/hotbar_slot_%d.png" % (i + 1)) as Texture2D
+		var sb := StyleBoxTexture.new()
+		sb.texture = tex
+		_slot_styles.append(sb)
+	var active_tex := load("res://assets/ui/hotbar_slot_active.png") as Texture2D
+	_slot_active_style = StyleBoxTexture.new()
+	_slot_active_style.texture = active_tex
+
+
 func _refresh_hotbar() -> void:
 	var lp := _get_local_player_node()
 	var active_idx := lp.selected_hotbar_index if lp != null else 0
@@ -140,7 +165,9 @@ func _refresh_hotbar() -> void:
 			var it := Catalog.get_item(StringName(item_id))
 			b.icon = it.icon if it != null else null
 			b.text = str(cnt) if cnt > 1 else ""
-		b.modulate = Color(1.0, 0.92, 0.45) if i == active_idx else Color(1, 1, 1)
+		var frame_sb := _slot_active_style if i == active_idx else _slot_styles[i]
+		b.add_theme_stylebox_override("normal", frame_sb)
+		b.add_theme_stylebox_override("focus", frame_sb)
 
 
 func _on_world_xp_changed(lv: int, xp: int, needed: int) -> void:

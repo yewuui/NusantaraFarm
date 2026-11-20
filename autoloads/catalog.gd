@@ -307,7 +307,7 @@ func get_item_icon(atlas_index: int) -> Texture2D:
 		return null
 	var tex := AtlasTexture.new()
 	tex.atlas = _items_atlas
-	tex.region = Rect2((atlas_index % 8) * 16, (atlas_index / 8) * 16, 16, 16)
+	tex.region = Rect2((atlas_index % 8) * 16, int(atlas_index / 8) * 16, 16, 16)
 	_item_icon_cache[atlas_index] = tex
 	return tex
 
