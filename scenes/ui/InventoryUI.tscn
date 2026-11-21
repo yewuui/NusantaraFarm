@@ -83,7 +83,7 @@ autowrap_mode = 3
 [node name="BtnSwapHotbar" type="Button" parent="Panel/VBox/Body/DetailBox"]
 visible = false
 layout_mode = 2
-text = "Taruh ke Slot 6 Hotbar"
+text = "Taruh ke Slot 8 Hotbar"
 
 [node name="BtnAction" type="Button" parent="Panel/VBox/Body/DetailBox"]
 visible = false

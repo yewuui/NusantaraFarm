@@ -13,3 +13,4 @@ extends Resource
 @export var unlock_cost_coins: int = 0
 @export var unlock_cost_wood: int = 0
 @export var map_pin_pos: Vector2 = Vector2(100, 100)
+@export var map_display_size: Vector2 = Vector2(56, 36)

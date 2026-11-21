@@ -323,3 +323,24 @@ func _client_player_zone_changed(peer_id: int, zone_id: String, spawn_pos: Vecto
 		peer_profiles[peer_id]["current_zone"] = zone_id
 		peer_profiles[peer_id]["pos"] = [spawn_pos.x, spawn_pos.y]
 	peer_roster_changed.emit()
+
+
+@rpc("any_peer", "call_local", "unreliable_ordered")
+func sync_player_motion(zone_id: String, pos: Vector2) -> void:
+	var sender_id := multiplayer.get_remote_sender_id() if is_network_active() else 1
+	if sender_id == 0:
+		sender_id = 1
+	if not peer_profiles.has(sender_id):
+		return
+	peer_profiles[sender_id]["current_zone"] = zone_id
+	peer_profiles[sender_id]["pos"] = [pos.x, pos.y]
+	if is_network_active() and multiplayer.is_server():
+		rpc("_client_sync_player_motion", sender_id, zone_id, pos)
+
+
+@rpc("authority", "call_local", "unreliable_ordered")
+func _client_sync_player_motion(peer_id: int, zone_id: String, pos: Vector2) -> void:
+	if not peer_profiles.has(peer_id):
+		return
+	peer_profiles[peer_id]["current_zone"] = zone_id
+	peer_profiles[peer_id]["pos"] = [pos.x, pos.y]

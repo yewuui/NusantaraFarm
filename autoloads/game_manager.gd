@@ -50,6 +50,8 @@ func _ensure_input_actions() -> void:
 		"hotbar_4": [KEY_4],
 		"hotbar_5": [KEY_5],
 		"hotbar_6": [KEY_6],
+		"hotbar_7": [KEY_7],
+		"hotbar_8": [KEY_8],
 	}
 	for action_name in key_bindings.keys():
 		if not InputMap.has_action(action_name):

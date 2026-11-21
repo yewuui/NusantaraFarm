@@ -111,7 +111,7 @@ func _refresh_detail() -> void:
 	detail_name.text = "%s (x%d)" % [it.display_name, cnt]
 	detail_desc.text = "%s\nHarga dasar: %d Koin" % [it.description, it.base_sell_price]
 
-	btn_swap_hotbar.visible = (_mode == "bag" and _selected_idx >= 6)
+	btn_swap_hotbar.visible = (_mode == "bag" and _selected_idx >= 8)
 	btn_action.visible = true
 	match _mode:
 		"bag":
@@ -143,9 +143,9 @@ func _on_btn_action_pressed() -> void:
 
 
 func _on_btn_swap_hotbar_pressed() -> void:
-	if _selected_idx >= 6:
-		EconomyManager.request_swap_inventory_slots(_selected_idx, 5)
-		_selected_idx = 5
+	if _selected_idx >= 8:
+		EconomyManager.request_swap_inventory_slots(_selected_idx, 7)
+		_selected_idx = 7
 
 
 func _on_btn_close_pressed() -> void:

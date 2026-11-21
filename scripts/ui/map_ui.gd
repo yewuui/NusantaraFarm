@@ -54,7 +54,17 @@ func _refresh() -> void:
 		pin.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		pin.custom_minimum_size = Vector2(18, 18)
 		pin.size = Vector2(18, 18)
-		pin.position = z.map_pin_pos
+		var pos_arr: Array = info.get("pos", [0.0, 0.0])
+		var world_pos := Vector2(float(pos_arr[0]), float(pos_arr[1]))
+		var zone_size := Vector2(z.grid_size) * 16.0
+		var normalized := Vector2(0.5, 0.5)
+		if zone_size.x > 0.0 and zone_size.y > 0.0:
+			normalized = Vector2(
+				clampf(world_pos.x / zone_size.x, 0.0, 1.0),
+				clampf(world_pos.y / zone_size.y, 0.0, 1.0)
+			)
+		var pin_center := z.map_pin_pos - z.map_display_size * 0.5 + z.map_display_size * normalized
+		pin.position = pin_center - pin.size * 0.5
 		pin.tooltip_text = str(info.get("player_name", "Petani"))
 		pins_layer.add_child(pin)
 

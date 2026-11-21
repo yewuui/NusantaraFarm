@@ -175,6 +175,8 @@ flowchart LR
 | 5 | **Pantai & Laut** | Terkunci | **World Lv 4** + Quest Nelayan Bahri + `25 Kayu` & `400 Koin` perbaikan Jembatan Selatan | Pesisir pasir tropis, pohon Kelapa pantai, foraging kerang & garam laut (bahan resep!), serta Dermaga Memancing (Fase 2). |
 | 6 | **Pegunungan & Tambang** | Terkunci | **World Lv 5** + Quest Kepala Desa + `500 Koin` pembukaan jalur longsor | Kaki gunung berapi ikonik Nusantara, titik tambang damai bebas monster (Fase 2), dan mata air pegunungan. |
 
+> **Mode Pengembangan:** `DEV_UNLOCK_ALL_ZONES = true` di `WorldStateManager` membuat semua zona terbuka sejak awal — gerbang tidak muncul, portal bisa dipakai, dan peta tidak menampilkan label "[Terkunci]". Set ke `false` saat ingin memakai aturan unlock normal.
+
 > **Catatan Aturan Multiplayer Zona:** Setiap pemain dalam sesi Co-op LAN dapat berada di zona yang berbeda secara bersamaan (misal Pemain 1 di Kebun, Pemain 2 menjual barang di Pasar, Pemain 3 menebang & replanting di Hutan). Perubahan lingkungan (pohon ditebang, lahan dicangkul, gerbang zona terbuka) tetap tersinkronisasi untuk seluruh world.
 
 ---
@@ -333,9 +335,9 @@ Fitur-fitur di bawah ini telah dipersiapkan tempat aset dan arsitekturnya sejak 
 
 | Layar / Overlay | Komponen Utama |
 | :--- | :--- |
-| **1. Main Menu** | Ilustrasi latar gunung berapi, sawah terasering & Joglo senja; logo *Nusantara Farm: Petualangan Desa*; tombol: `MULAI BARU`, `LANJUTKAN`, `MAIN BARENG (LAN)`, `PENGATURAN`, `KELUAR`. |
+| **1. Main Menu** | Menu pixel baru (`assets/ui/pixel_menu_bg.png`) menampilkan logo *Nusantara Farm: Petualangan Desa* dan lima tombol kayu: `MULAI BARU`, `LANJUTKAN`, `MAIN BARENG (LAN)`, `PENGATURAN`, `KELUAR`. Area klik transparan mengikuti posisi tombol di gambar. |
 | **2. Buat Karakter & Lobby LAN** | Pilih avatar (**Budi** / **Mitha**), isi nama petani, buat World baru (Host) atau cari/masukkan IP World LAN terdekat (Client) dengan daftar pemain yang terhubung. |
-| **3. HUD Gameplay Utama** | **Kiri Atas:** Koin Pribadi, World Level & bar EXP, Bar Stamina, Ikon Status (Mengantuk/Eco-Meter). **Kanan Atas:** Hari/Musim/Jam (`H1 Kemarau 07:20`), Ikon Cuaca (`Cerah`/`Hujan`), tombol Pengaturan/Pause. **Kanan Bawah:** Mini-map (PC) atau Tombol Peta & Aksi Sentuh (Android). **Tengah Bawah:** Hotbar 6 slot cepat + tombol `Tas Pinggang`, `Profil`, & `Peta Besar`. |
+| **3. HUD Gameplay Utama** | **Kiri Atas:** Koin Pribadi, World Level & bar EXP, Bar Stamina, Ikon Status (Mengantuk/Eco-Meter). **Kanan Atas:** Hari/Musim/Jam (`H1 Kemarau 07:20`), Ikon Cuaca (`Cerah`/`Hujan`), tombol Pengaturan/Pause. **Kanan Bawah:** Mini-map (PC) atau Tombol Peta & Aksi Sentuh (Android). **Tengah Bawah:** Hotbar 8 slot cepat + tombol `Tas Pinggang`. Tombol `Peta` ada di panel kanan atas; tombol `Pengaturan` di samping panel koin/eco (panel tersebut juga bisa diketuk untuk membuka `Profil`). |
 | **4. Tas Pinggang (Inventory)** | Grid item (`5x3` awal), tab kategori opsional, dan panel kanan menampilkan ikon besar, nama item, harga dasar, serta deskripsi/efek stamina. |
 | **5. Stasiun Produksi Joglo** | Tampilan 3 kolom klasik: `INPUT (Bahan + Jumlah)` → `RESEP & WAKTU` → `OUTPUT (Hasil)` + daftar resep terbuka + progress bar proses berjalan. |
 | **6. Pasar & Konsinyasi** | Tab `Beli Barang` (daftar bibit/bahan toko) dan Tab `Titip Jual (Konsinyasi)` (slot titipan aktif, sisa waktu laku, tombol `Ambil Koin` saat terjual). |
@@ -350,7 +352,7 @@ Fitur-fitur di bawah ini telah dipersiapkan tempat aset dan arsitekturnya sejak 
 | **Bergerak** | `W / A / S / D` atau `Tombol Panah` | **Virtual Joystick** (kiri bawah layar) |
 | **Gunakan Alat / Tanam / Siram** | `Klik Kiri` pada petak sekitar karakter atau tombol `Spasi` | **Tombol Aksi Utama** (kanan bawah, kontekstual) atau **Tap langsung** petak yang berada dalam jangkauan 1 tile |
 | **Interaksi NPC / Pintu / Mesin / Kasur** | Tombol `E` atau `Klik Kanan / Klik Kiri` objek | **Tombol Interaksi Kontekstual** (ikon muncul otomatis saat dekat objek/NPC) atau Tap objek |
-| **Pilih Slot Hotbar** | Angka `1 – 6` atau `Scroll Wheel` | Tap langsung slot di Hotbar bawah |
+| **Pilih Slot Hotbar** | Angka `1 – 8` atau `Scroll Wheel` | Tap langsung slot di Hotbar bawah |
 | **Buka Tas / Peta / Profil / Pause** | `Tab` atau `B` (Tas), `M` (Peta), `P` (Profil), `Esc` (Pengaturan) | Ketuk ikon langsung di HUD |
 
 ---

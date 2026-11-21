@@ -12,6 +12,8 @@ signal chest_updated
 signal world_state_reloaded
 
 const MAX_CHEST_SLOTS := 20
+## Development: semua zona dibuka dulu. Set ke false saat mau rilis/produksi.
+const DEV_UNLOCK_ALL_ZONES := true
 const DEFAULT_FOREST_POSITIONS := [
 	Vector2(112, 112), Vector2(192, 96), Vector2(288, 112), Vector2(384, 96),
 	Vector2(464, 128), Vector2(144, 240), Vector2(240, 272), Vector2(336, 256),
@@ -47,6 +49,9 @@ func reset_new_world() -> void:
 		"pantai": false,
 		"tambang": false,
 	}
+	if DEV_UNLOCK_ALL_ZONES:
+		for zone_id in unlocked_zones.keys():
+			unlocked_zones[zone_id] = true
 	farm_plots = {
 		"kebun": {},
 		"sawit": {},
@@ -69,6 +74,8 @@ func reset_new_world() -> void:
 
 
 func is_zone_unlocked(zone_id: String) -> bool:
+	if DEV_UNLOCK_ALL_ZONES:
+		return true
 	return bool(unlocked_zones.get(zone_id, false))
 
 

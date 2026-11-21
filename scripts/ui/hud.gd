@@ -17,9 +17,12 @@ extends CanvasLayer
 @onready var prompt_label: Label = $Root/PromptLabel
 @onready var toast_label: Label = $Root/ToastLabel
 @onready var drowsy_vignette: ColorRect = $DrowsyVignette
+@onready var minimap_map_rect: TextureRect = $Root/TopRight/VBox/MiniMap/MapContainer/MapRect
+@onready var minimap_pins_layer: Control = $Root/TopRight/VBox/MiniMap/MapContainer/PinsLayer
 
 var _hotbar_buttons: Array[Button] = []
 var _toast_timer: float = 0.0
+var _minimap_timer: float = 0.0
 
 # Satu bingkai kayu untuk tiap slot, plus bingkai krem untuk slot yang aktif.
 var _slot_styles: Array[StyleBoxTexture] = []
@@ -29,7 +32,7 @@ var _slot_active_style: StyleBoxTexture
 func _ready() -> void:
 	$Root.theme = UIThemeHelper.get_theme()
 	_make_slot_styles()
-	for i in range(6):
+	for i in range(8):
 		var b := Button.new()
 		b.custom_minimum_size = Vector2(26, 26)
 		b.add_theme_stylebox_override("normal", _slot_styles[i])
@@ -65,6 +68,11 @@ func _process(delta: float) -> void:
 		if _toast_timer <= 0.0:
 			toast_label.visible = false
 
+	_minimap_timer -= delta
+	if _minimap_timer <= 0.0:
+		_minimap_timer = 0.75
+		_refresh_minimap()
+
 	var local_player := _get_local_player_node()
 	if local_player != null:
 		var ptext := local_player.get_nearby_prompt()
@@ -75,18 +83,18 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	for i in range(6):
+	for i in range(8):
 		if event.is_action_pressed("hotbar_%d" % (i + 1)):
 			_on_hotbar_slot_pressed(i)
 			return
 	if event.is_action_pressed("hotbar_next"):
 		var lp := _get_local_player_node()
 		if lp != null:
-			_on_hotbar_slot_pressed((lp.selected_hotbar_index + 1) % 6)
+			_on_hotbar_slot_pressed((lp.selected_hotbar_index + 1) % 8)
 	elif event.is_action_pressed("hotbar_prev"):
 		var lp := _get_local_player_node()
 		if lp != null:
-			_on_hotbar_slot_pressed((lp.selected_hotbar_index + 5) % 6)
+			_on_hotbar_slot_pressed((lp.selected_hotbar_index + 7) % 8)
 
 
 func _on_hotbar_slot_pressed(idx: int) -> void:
@@ -126,6 +134,7 @@ func _refresh_all() -> void:
 	_on_eco_changed(WorldStateManager.eco_meter)
 	_on_time_tick(TimeManager.get_hour(), TimeManager.get_minute())
 	_on_festival_changed(TimeManager.is_festival_active())
+	_refresh_minimap()
 
 
 func _refresh_player_stats() -> void:
@@ -140,7 +149,7 @@ func _refresh_player_stats() -> void:
 
 
 func _make_slot_styles() -> void:
-	for i in range(6):
+	for i in range(8):
 		var tex := load("res://assets/ui/hotbar_slot_%d.png" % (i + 1)) as Texture2D
 		var sb := StyleBoxTexture.new()
 		sb.texture = tex
@@ -153,7 +162,7 @@ func _make_slot_styles() -> void:
 func _refresh_hotbar() -> void:
 	var lp := _get_local_player_node()
 	var active_idx := lp.selected_hotbar_index if lp != null else 0
-	for i in range(6):
+	for i in range(8):
 		var b := _hotbar_buttons[i]
 		var slot := EconomyManager.get_inventory_slot(GameManager.player_uuid, i)
 		var item_id := str(slot.get("id", ""))
@@ -218,6 +227,53 @@ func _on_toast_requested(msg: String, kind: String) -> void:
 
 func _get_world_root() -> WorldRoot:
 	return get_tree().get_first_node_in_group("world_root") as WorldRoot
+
+
+func _refresh_minimap() -> void:
+	if minimap_map_rect == null or minimap_pins_layer == null:
+		return
+	for c in minimap_pins_layer.get_children():
+		minimap_pins_layer.remove_child(c)
+		c.queue_free()
+
+	var map_tex := minimap_map_rect.texture
+	if map_tex == null:
+		return
+	var tex_size := map_tex.get_size()
+	var area_size := minimap_map_rect.size
+	if tex_size.x <= 0.0 or tex_size.y <= 0.0 or area_size.x <= 0.0 or area_size.y <= 0.0:
+		return
+	var scale := minf(area_size.x / tex_size.x, area_size.y / tex_size.y)
+	var drawn_size := tex_size * scale
+	var origin := (area_size - drawn_size) * 0.5
+	var pin_scale := drawn_size.x / tex_size.x
+
+	for pid in NetworkManager.peer_profiles.keys():
+		var info: Dictionary = NetworkManager.peer_profiles[pid]
+		var pz := str(info.get("current_zone", "kebun"))
+		if pz == "joglo_interior":
+			pz = "kebun"
+		elif pz == "balai_desa":
+			pz = "desa_pasar"
+		var z := Catalog.get_zone(StringName(pz))
+		if z == null:
+			continue
+		var pin := ColorRect.new()
+		pin.size = Vector2(4, 4)
+		var pos_arr: Array = info.get("pos", [0.0, 0.0])
+		var world_pos := Vector2(float(pos_arr[0]), float(pos_arr[1]))
+		var zone_size := Vector2(z.grid_size) * 16.0
+		var normalized := Vector2(0.5, 0.5)
+		if zone_size.x > 0.0 and zone_size.y > 0.0:
+			normalized = Vector2(
+				clampf(world_pos.x / zone_size.x, 0.0, 1.0),
+				clampf(world_pos.y / zone_size.y, 0.0, 1.0)
+			)
+		var pin_center := z.map_pin_pos - z.map_display_size * 0.5 + z.map_display_size * normalized
+		pin.position = origin + pin_center * pin_scale - pin.size * 0.5
+		pin.color = Color(0.2, 1.0, 0.35) if int(pid) == NetworkManager.get_local_peer_id() else Color(1.0, 0.85, 0.25)
+		pin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		minimap_pins_layer.add_child(pin)
 
 
 func _get_local_player_node() -> PlayerController:

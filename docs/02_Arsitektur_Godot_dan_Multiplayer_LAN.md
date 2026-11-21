@@ -38,7 +38,7 @@ Gunakan nama aksi berbahasa Inggris yang konsisten untuk keyboard/gamepad, semen
 - Aksi Utama (Alat/Tanam/Siram): `action_use` (`Space` / `Mouse Left`).
 - Interaksi (NPC/Pintu/Mesin/Kasur): `action_interact` (`E` / `Mouse Right`).
 - Menu Cepat: `ui_inventory` (`Tab`/`B`), `ui_map` (`M`), `ui_profile` (`P`), `ui_pause` (`Esc`).
-- Hotbar: `hotbar_1` .. `hotbar_6` (`1`–`6`, plus `hotbar_next`/`hotbar_prev` lewat `Mouse Wheel`).
+- Hotbar: `hotbar_1` .. `hotbar_8` (`1`–`8`, plus `hotbar_next`/`hotbar_prev` lewat `Mouse Wheel`).
 
 ---
 

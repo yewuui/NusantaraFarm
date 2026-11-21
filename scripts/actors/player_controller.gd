@@ -99,14 +99,15 @@ func _physics_process(delta: float) -> void:
 	_update_tile_cursor()
 	_refresh_nearby_interactable()
 
-	if NetworkManager.is_network_active():
-		_sync_timer += delta
-		if _sync_timer >= SYNC_INTERVAL:
-			_sync_timer = 0.0
-			var cur_anim := String(sprite.animation)
-			var wr := _get_world_root()
-			var cur_zone: String = wr.current_zone_id if wr != null else "kebun"
+	_sync_timer += delta
+	if _sync_timer >= SYNC_INTERVAL:
+		_sync_timer = 0.0
+		var cur_anim := String(sprite.animation)
+		var wr := _get_world_root()
+		var cur_zone: String = wr.current_zone_id if wr != null else "kebun"
+		if NetworkManager.is_network_active():
 			rpc("_rpc_sync_motion", global_position, cur_anim, cur_zone)
+		NetworkManager.sync_player_motion(cur_zone, global_position)
 
 
 func _unhandled_input(event: InputEvent) -> void:

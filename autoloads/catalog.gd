@@ -231,14 +231,14 @@ func _register_quests() -> void:
 
 func _register_zones() -> void:
 	var defs := [
-		["kebun", "Rumah & Kebun", "res://scenes/zones/ZonaKebun.tscn", Vector2i(36, 24), false, true, 1, &"", 0, 0, Vector2(64, 52)],
-		["joglo_interior", "Dalam Rumah Joglo", "res://scenes/interiors/JogloInterior.tscn", Vector2i(20, 14), true, true, 1, &"", 0, 0, Vector2(64, 52)],
-		["desa_pasar", "Desa Utama & Pasar", "res://scenes/zones/ZonaDesaPasar.tscn", Vector2i(38, 24), false, true, 1, &"", 0, 0, Vector2(170, 102)],
-		["balai_desa", "Balai Desa Nusantara", "res://scenes/interiors/BalaiDesaInterior.tscn", Vector2i(20, 14), true, true, 1, &"", 0, 0, Vector2(170, 102)],
-		["hutan", "Hutan Tropis", "res://scenes/zones/ZonaHutan.tscn", Vector2i(36, 24), false, false, 2, &"q_buka_hutan", 50, 0, Vector2(205, 58)],
-		["sawit", "Perkebunan Sawit", "res://scenes/zones/ZonaSawit.tscn", Vector2i(36, 24), false, false, 3, &"q_buka_sawit", 200, 10, Vector2(82, 160)],
-		["pantai", "Pantai & Laut", "res://scenes/zones/ZonaPantai.tscn", Vector2i(36, 24), false, false, 4, &"q_buka_pantai", 400, 15, Vector2(315, 162)],
-		["tambang", "Pegunungan & Tambang", "res://scenes/zones/ZonaTambang.tscn", Vector2i(36, 24), false, false, 5, &"q_buka_tambang", 500, 0, Vector2(326, 52)],
+		["kebun", "Rumah & Kebun", "res://scenes/zones/ZonaKebun.tscn", Vector2i(36, 24), false, true, 1, &"", 0, 0, Vector2(64, 52), Vector2(56, 36)],
+		["joglo_interior", "Dalam Rumah Joglo", "res://scenes/interiors/JogloInterior.tscn", Vector2i(20, 14), true, true, 1, &"", 0, 0, Vector2(64, 52), Vector2(56, 36)],
+		["desa_pasar", "Desa Utama & Pasar", "res://scenes/zones/ZonaDesaPasar.tscn", Vector2i(38, 24), false, true, 1, &"", 0, 0, Vector2(170, 102), Vector2(92, 44)],
+		["balai_desa", "Balai Desa Nusantara", "res://scenes/interiors/BalaiDesaInterior.tscn", Vector2i(20, 14), true, true, 1, &"", 0, 0, Vector2(170, 102), Vector2(92, 44)],
+		["hutan", "Hutan Tropis", "res://scenes/zones/ZonaHutan.tscn", Vector2i(36, 24), false, false, 2, &"q_buka_hutan", 50, 0, Vector2(205, 58), Vector2(60, 40)],
+		["sawit", "Perkebunan Sawit", "res://scenes/zones/ZonaSawit.tscn", Vector2i(36, 24), false, false, 3, &"q_buka_sawit", 200, 10, Vector2(82, 160), Vector2(64, 38)],
+		["pantai", "Pantai & Laut", "res://scenes/zones/ZonaPantai.tscn", Vector2i(36, 24), false, false, 4, &"q_buka_pantai", 400, 15, Vector2(315, 162), Vector2(84, 40)],
+		["tambang", "Pegunungan & Tambang", "res://scenes/zones/ZonaTambang.tscn", Vector2i(36, 24), false, false, 5, &"q_buka_tambang", 500, 0, Vector2(326, 52), Vector2(60, 38)],
 	]
 	for d in defs:
 		var z := ZoneData.new()
@@ -253,6 +253,7 @@ func _register_zones() -> void:
 		z.unlock_cost_coins = d[8]
 		z.unlock_cost_wood = d[9]
 		z.map_pin_pos = d[10]
+		z.map_display_size = d[11]
 		zones[z.zone_id] = z
 
 
